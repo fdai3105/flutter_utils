@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
           buildItem: <T>(item) {
             final i = item as PassengerDatum;
             return ListTile(
+              leading: Image.network(i.airline.first.logo ?? '', width: 80),
               title: Text(i.name),
             );
           },

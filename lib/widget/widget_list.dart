@@ -3,7 +3,7 @@ part of 'widget.dart';
 class WidgetList<T> extends StatefulWidget {
   final Future<List<T>?> Function() load;
   final Future<List<T>?> Function(int page) loadMore;
-  final Widget Function(T item) buildItem;
+  final Widget Function<T>(T item) buildItem;
 
   const WidgetList({
     Key? key,
@@ -16,7 +16,7 @@ class WidgetList<T> extends StatefulWidget {
   _WidgetListState createState() => _WidgetListState();
 }
 
-class _WidgetListState extends State<WidgetList> {
+class _WidgetListState<T> extends State<WidgetList> {
   List? items;
   bool loading = true;
   int page = 1;
@@ -65,6 +65,7 @@ class _WidgetListState extends State<WidgetList> {
       return const Center(child: Text('Server Err'));
     }
     return ListView.builder(
+      physics: const BouncingScrollPhysics(),
       controller: sc,
       itemCount: items!.length + 1,
       itemBuilder: (context, i) {
