@@ -6,7 +6,17 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(actions: [
+        IconButton(
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const TabNavigationScreen(),
+            ),
+          ),
+          icon: const Icon(Icons.ac_unit_rounded),
+        ),
+      ]),
       body: SafeArea(
         child: WidgetList<PassengerDatum>(
           load: () => PassengerProvider().loadPassenger(1),
