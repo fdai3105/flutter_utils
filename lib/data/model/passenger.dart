@@ -20,7 +20,7 @@ class Passenger {
         totalPassengers: json["totalPassengers"],
         totalPages: json["totalPages"],
         data: List<PassengerDatum>.from(
-            json["data"].map((x) => PassengerDatum.fromJson(x))),
+            json["data"].map(PassengerDatum.fromJson)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -54,8 +54,7 @@ class PassengerDatum {
         id: json["_id"],
         name: json["name"],
         trips: json["trips"],
-        airline:
-            List<Airline>.from(json["airline"].map((x) => Airline.fromJson(x))),
+        airline: List<Airline>.from(json["airline"].map(Airline.fromJson)),
         v: json["__v"],
       );
 

@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
         child: WidgetList<PassengerDatum>(
           load: () => PassengerProvider().loadPassenger(1),
           loadMore: (page) => PassengerProvider().loadPassenger(page),
-          buildItem: <T>(item) {
+          buildItem: <T>(item, i) {
             final i = item as PassengerDatum;
             return ListTile(
               leading: Image.network(i.airline.first.logo ?? '', width: 80),

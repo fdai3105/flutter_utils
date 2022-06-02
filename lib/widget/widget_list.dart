@@ -3,7 +3,7 @@ part of 'widget.dart';
 class WidgetList<T> extends StatefulWidget {
   final Future<List<T>?> Function() load;
   final Future<List<T>?> Function(int page) loadMore;
-  final Widget Function<T>(T item) buildItem;
+  final Widget Function<T>(T item, int index) buildItem;
 
   const WidgetList({
     Key? key,
@@ -22,6 +22,7 @@ class _WidgetListState<T> extends State<WidgetList> {
   int page = 1;
   bool loadMoreLoading = false;
   bool loadMoreEnd = false;
+  bool isLoadMoreError = false;
 
   late final ScrollController sc;
 
@@ -50,6 +51,7 @@ class _WidgetListState<T> extends State<WidgetList> {
     if (resp == null || resp.isEmpty) {
       setState(() => loadMoreEnd = true);
       page--;
+      setState(() => isLoadMoreError = true);
     }
     setState(() => items = [...?items, ...?resp]);
     setState(() => loadMoreLoading = false);
@@ -84,7 +86,7 @@ class _WidgetListState<T> extends State<WidgetList> {
           }
           return const SizedBox();
         }
-        return widget.buildItem(items![i]);
+        return widget.buildItem(items![i], i);
       },
     );
   }
