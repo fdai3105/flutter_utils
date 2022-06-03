@@ -40,7 +40,7 @@ class Coin {
   final double marketCap;
   final int marketCapRank;
   final double? fullyDilutedValuation;
-  final int totalVolume;
+  final num totalVolume;
   final double high24H;
   final double low24H;
   final double priceChange24H;
@@ -61,15 +61,12 @@ class Coin {
 
   factory Coin.fromRawJson(String str) => Coin.fromJson(json.decode(str));
 
-  String toRawJson() => json.encode(toJson());
-
   factory Coin.fromJson(Map<String, dynamic> json) => Coin(
         id: json["id"],
         symbol: json["symbol"],
         name: json["name"],
         image: json["image"],
-        sparkline:
-            'coingecko.com/coins/${json["image"]?.split('/')[5]}/sparkline',
+        sparkline: 'https://coingecko.com/coins/${json["image"]?.split('/')[5]}/sparkline',
         currentPrice: json["current_price"].toDouble(),
         marketCap: json["market_cap"].toDouble(),
         marketCapRank: json["market_cap_rank"],
@@ -95,36 +92,6 @@ class Coin {
         roi: json["roi"] == null ? null : Roi.fromJson(json["roi"]),
         lastUpdated: DateTime.parse(json["last_updated"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "symbol": symbol,
-        "name": name,
-        "image": image,
-        'sparkline': sparkline,
-        "current_price": currentPrice,
-        "market_cap": marketCap,
-        "market_cap_rank": marketCapRank,
-        "fully_diluted_valuation": fullyDilutedValuation,
-        "total_volume": totalVolume,
-        "high_24h": high24H,
-        "low_24h": low24H,
-        "price_change_24h": priceChange24H,
-        "price_change_percentage_24h": priceChangePercentage24H,
-        "market_cap_change_24h": marketCapChange24H,
-        "market_cap_change_percentage_24h": marketCapChangePercentage24H,
-        "circulating_supply": circulatingSupply,
-        "total_supply": totalSupply,
-        "max_supply": maxSupply,
-        "ath": ath,
-        "ath_change_percentage": athChangePercentage,
-        "ath_date": athDate.toIso8601String(),
-        "atl": atl,
-        "atl_change_percentage": atlChangePercentage,
-        "atl_date": atlDate.toIso8601String(),
-        "roi": roi?.toJson(),
-        "last_updated": lastUpdated.toIso8601String(),
-      };
 }
 
 class Roi {
@@ -140,17 +107,9 @@ class Roi {
 
   factory Roi.fromRawJson(String str) => Roi.fromJson(json.decode(str));
 
-  String toRawJson() => json.encode(toJson());
-
   factory Roi.fromJson(Map<String, dynamic> json) => Roi(
         times: json["times"].toDouble(),
         currency: json["currency"],
         percentage: json["percentage"].toDouble(),
       );
-
-  Map<String, dynamic> toJson() => {
-        "times": times,
-        "currency": currency,
-        "percentage": percentage,
-      };
 }
