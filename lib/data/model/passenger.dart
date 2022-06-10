@@ -1,4 +1,4 @@
-part of 'model.dart';
+part of '_model.dart';
 
 class Passenger {
   Passenger({

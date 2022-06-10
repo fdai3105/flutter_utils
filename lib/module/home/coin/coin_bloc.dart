@@ -7,9 +7,10 @@ import 'coin_state.dart';
 enum Currency { custom, btc }
 
 class CoinBloc extends Bloc<CoinEvent, CoinState> {
-  final CoinProvider coinProvider;
+  late final CoinProvider coinProvider;
 
-  CoinBloc({required this.coinProvider}) : super(const CoinState()) {
+  CoinBloc() : super(const CoinState()) {
+    coinProvider = CoinProvider();
     on<ChangeCurrencyEvent>(onCurrencyChange);
   }
 

@@ -1,4 +1,4 @@
-part of 'widget.dart';
+part of '_widget.dart';
 
 class TabItem {
   const TabItem({required this.index, required this.icon});

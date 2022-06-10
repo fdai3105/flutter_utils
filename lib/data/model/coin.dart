@@ -1,4 +1,4 @@
-part of 'model.dart';
+part of '_model.dart';
 
 class Coin {
   const Coin({
@@ -66,7 +66,8 @@ class Coin {
         symbol: json["symbol"],
         name: json["name"],
         image: json["image"],
-        sparkline: 'https://coingecko.com/coins/${json["image"]?.split('/')[5]}/sparkline',
+        sparkline:
+            'https://coingecko.com/coins/${json["image"]?.split('/')[5]}/sparkline',
         currentPrice: json["current_price"].toDouble(),
         marketCap: json["market_cap"].toDouble(),
         marketCapRank: json["market_cap_rank"],
