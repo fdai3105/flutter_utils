@@ -1,9 +1,9 @@
-part of 'widget.dart';
+part of '_widget.dart';
 
 class WidgetList<T> extends StatefulWidget {
   final Future<List<T>?> Function() load;
   final Future<List<T>?> Function(int page) loadMore;
-  final Widget Function<T>(T item, int index) buildItem;
+  final Widget Function(Object item, int index) buildItem;
 
   const WidgetList({
     Key? key,
@@ -13,7 +13,7 @@ class WidgetList<T> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _WidgetListState createState() => _WidgetListState();
+  _WidgetListState createState() => _WidgetListState<T>();
 }
 
 class _WidgetListState<T> extends State<WidgetList> {

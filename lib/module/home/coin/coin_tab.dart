@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../data/model/model.dart';
+import '../../../data/model/_model.dart';
 import '../../../data/provider/provider.dart';
 import '../../../theme/app_color.dart';
-import '../../../widget/widget.dart';
-import '../../../widget/widget_image.dart';
+import '../../../utils/navigation.dart';
+import '../../../widget/_widget.dart';
+import '../../coin_detail/coin_detail_screen.dart';
 import 'coin_bloc.dart';
 import 'coin_event.dart';
 import 'coin_state.dart';
@@ -79,7 +80,26 @@ class CoinTab extends StatelessWidget {
                   buildFilterButton(
                     text: 'Sort by Rank',
                     showArrow: true,
-                    onTap: () {},
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        backgroundColor: Colors.transparent,
+                        enableDrag: true,
+                        builder: (context) {
+                          return const WidgetBottomSheet(
+                            title: 'Sort by Rank',
+                            children: [
+                              ListTile(title: Text('Rank')),
+                              ListTile(title: Text('Change')),
+                              ListTile(title: Text('Market Cap')),
+                              ListTile(title: Text('Volume (24H)')),
+                              ListTile(title: Text('Price')),
+                              ListTile(title: Text('Name')),
+                            ],
+                          );
+                        },
+                      );
+                    },
                   ),
                 ],
               ),
@@ -99,9 +119,13 @@ class CoinTab extends StatelessWidget {
                   page,
                   currency: state.currencyString,
                 ),
-                buildItem: <T>(item, index) => ItemCoin(
+                buildItem: (item, index) => ItemCoin(
                   item: item as Coin,
                   index: index,
+                  onPress: () => Navigation.push(
+                    context,
+                    CoinDetailScreen(coin: item),
+                  ),
                 ),
               ),
             );
@@ -117,10 +141,12 @@ class ItemCoin extends StatelessWidget {
     Key? key,
     required this.item,
     required this.index,
+    required this.onPress,
   }) : super(key: key);
 
   final Coin item;
   final int index;
+  final Function() onPress;
 
   List<Widget> buildPercent() {
     var icon = Icons.horizontal_rule_rounded;
@@ -143,78 +169,82 @@ class ItemCoin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      child: Row(
-        children: [
-          WidgetImage(
-            url: item.image,
-            height: 30,
-            width: 30,
-          ),
-          const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                item.name,
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 4),
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 4,
-                      vertical: 2,
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onPress,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          children: [
+            WidgetImage(
+              url: item.image,
+              height: 30,
+              width: 30,
+            ),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.name,
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 4,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.dark4,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        '${index + 1}',
+                        style: const TextStyle(fontSize: 10),
+                      ),
                     ),
-                    decoration: BoxDecoration(
-                      color: AppColors.dark4,
-                      borderRadius: BorderRadius.circular(4),
+                    const SizedBox(width: 6),
+                    Text(
+                      item.symbol.toUpperCase(),
+                      style: const TextStyle(fontSize: 12),
                     ),
-                    child: Text(
-                      '${index + 1}',
-                      style: const TextStyle(fontSize: 10),
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    item.symbol.toUpperCase(),
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                  const SizedBox(width: 6),
-                  ...buildPercent(),
-                ],
-              )
-            ],
-          ),
-          Flexible(
-            flex: 1,
-            fit: FlexFit.tight,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: SvgPicture.network(
-                item.sparkline,
-                height: 36,
-                fit: BoxFit.fill,
+                    const SizedBox(width: 6),
+                    ...buildPercent(),
+                  ],
+                )
+              ],
+            ),
+            Flexible(
+              flex: 1,
+              fit: FlexFit.tight,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: SvgPicture.network(
+                  item.sparkline,
+                  height: 36,
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                item.currentPrice.toString(),
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                'MCap ${(item.marketCap / 1000000000).toStringAsFixed(2)} Bn',
-                style: const TextStyle(fontSize: 12),
-              ),
-            ],
-          ),
-        ],
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  item.currentPrice.toString(),
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  'MCap ${(item.marketCap / 1000000000).toStringAsFixed(2)} Bn',
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

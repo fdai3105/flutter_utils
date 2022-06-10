@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../widget/widget.dart';
-import '../../widget/widget_appbar.dart';
+import '../../widget/_widget.dart';
 import 'coin/coin_tab.dart';
 import 'explore/explore_tab.dart';
 import 'more/more_tab.dart';
 import 'portfolio/portfolio_tab.dart';
 
-class TabNavigationScreen extends StatefulWidget {
-  const TabNavigationScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<TabNavigationScreen> createState() => _TabNavigationScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _TabNavigationScreenState extends State<TabNavigationScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   var _currentIndex = 0;
 
   @override

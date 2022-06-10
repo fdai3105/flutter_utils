@@ -8,10 +8,14 @@ class AppColors {
   static const tertiary = Color.fromRGBO(72, 78, 82, 1);
 
   static const light = Colors.white;
-  static final light2 = Colors.white.withOpacity(0.8);
-  static final light4 = Colors.white.withOpacity(0.6);
+  static const light2 = Color.fromRGBO(255, 255, 255, 0.2);
+  static const light4 = Color.fromRGBO(255, 255, 255, 0.4);
+  static const light6 = Color.fromRGBO(255, 255, 255, 0.6);
+  static const light8 = Color.fromRGBO(255, 255, 255, 0.8);
 
   static const dark = Colors.black87;
-  static final dark2 = Colors.black87.withOpacity(0.8);
-  static final dark4 = Colors.grey.shade800;
+  static const dark2 = Color.fromRGBO(0, 0, 0, 0.2);
+  static const dark4 = Color.fromRGBO(0, 0, 0, 0.4);
+  static const dark6 = Color.fromRGBO(0, 0, 0, 0.6);
+  static const dark8 = Color.fromRGBO(0, 0, 0, 0.8);
 }
