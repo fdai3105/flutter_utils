@@ -131,7 +131,7 @@ class Converted {
 
   final double btc;
   final double eth;
-  final int usd;
+  final num usd;
 
   factory Converted.fromRawJson(String str) =>
       Converted.fromJson(json.decode(str));

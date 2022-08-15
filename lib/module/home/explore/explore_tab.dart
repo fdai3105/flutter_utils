@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -43,7 +42,8 @@ class ExploreTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          TextField(),
+          const SizedBox(height: 10),
+          WidgetField(onChanged: (v) {}, label: 'Search'),
           const SizedBox(height: 20),
           const Text(
             'Trending',

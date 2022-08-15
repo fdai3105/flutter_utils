@@ -15,6 +15,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final ScrollController sc = ScrollController();
+
   var _currentIndex = 0;
 
   @override
@@ -53,12 +55,27 @@ class _HomeScreenState extends State<HomeScreen> {
         bottom: false,
         child: IndexedStack(
           index: _currentIndex,
-          children: const [CoinTab(), ExploreTab(), PortfolioTab(), MoreTab()],
+          children: [
+            CoinTab(sc: sc),
+            ExploreTab(),
+            PortfolioTab(),
+            MoreTab(),
+          ],
         ),
       ),
       bottomNavigationBar: TabNavigation(
         index: _currentIndex,
-        onTabPress: (index) => setState(() => _currentIndex = index),
+        onTabPress: (index) {
+          if (_currentIndex == index) {
+            if (sc.offset == 0) return;
+            sc.animateTo(
+              0,
+              duration: const Duration(seconds: 1),
+              curve: Curves.bounceIn,
+            );
+          }
+          setState(() => _currentIndex = index);
+        },
         tabs: const [
           TabItem(index: 0, icon: 'assets/icons/home.svg'),
           TabItem(index: 1, icon: 'assets/icons/search.svg'),

@@ -2,6 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../data/model/_model.dart';
 import '../../../theme/app_color.dart';
@@ -20,26 +22,42 @@ class OverviewTab extends StatelessWidget {
     final bloc = context.read<CoinDetailBloc>();
     bloc.add(ChangeDayEvent(id: coin.id, ago: DayAgo.day1h));
     return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.all(10),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(coin.name),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(coin.currentPrice.toString()),
+              Text(
+                '${coin.currentPrice}',
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               Container(
-                padding: const EdgeInsets.all(6),
+                padding: const EdgeInsets.all(2).add(EdgeInsets.only(right: 2)),
                 decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.circular(10),
+                  color: coin.priceChangePercentage24H.isNegative
+                      ? Colors.red
+                      : Colors.green,
+                  borderRadius: BorderRadius.circular(6),
                 ),
                 child: Row(
-                  children: const [
+                  children: [
                     Icon(
-                      Icons.arrow_drop_down_rounded,
+                      coin.priceChangePercentage24H.isNegative
+                          ? Icons.arrow_drop_down_rounded
+                          : Icons.arrow_drop_up_rounded,
                       color: Colors.white,
                     ),
-                    Text('0,15%'),
+                    Text(
+                      '${coin.priceChangePercentage24H.toStringAsFixed(2)}% ',
+                    ),
                   ],
                 ),
               ),
@@ -144,6 +162,75 @@ class OverviewTab extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: AppColors.dark4,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Column(
+              children: [
+                buildTableItem('Market Cap Rank', '#${coin.marketCapRank}'),
+                buildTableItem(
+                  'Market Cap',
+                  NumberFormat.simpleCurrency(decimalDigits: 0)
+                      .format(coin.marketCap),
+                ),
+                buildTableItem(
+                  'Fully Diluted Valuation',
+                  NumberFormat.simpleCurrency(decimalDigits: 0)
+                      .format(coin.fullyDilutedValuation),
+                ),
+                buildTableItem(
+                  'Trading Volume',
+                  NumberFormat.simpleCurrency(decimalDigits: 0)
+                      .format(coin.totalVolume),
+                ),
+                buildTableItem(
+                  'High 24h',
+                  NumberFormat.simpleCurrency().format(coin.high24H),
+                ),
+                buildTableItem(
+                  'Low 24h',
+                  NumberFormat.simpleCurrency().format(coin.low24H),
+                ),
+                buildTableItem(
+                  'Circulating Supply',
+                  NumberFormat.compactLong().format(coin.circulatingSupply),
+                ),
+                buildTableItem(
+                  'Total Supply',
+                  NumberFormat.compactLong().format(coin.totalSupply),
+                ),
+                buildTableItem(
+                  'Max Supply',
+                  NumberFormat.compactLong().format(coin.maxSupply),
+                ),
+                buildTableItem(
+                  'Last Updated',
+                  timeago.format(coin.lastUpdated),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget buildTableItem(String name, value) {
+    if (value == null) return const SizedBox();
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 10),
+      decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(color: AppColors.light2, width: 0.4)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(name, style: const TextStyle(color: AppColors.light4)),
+          Text(value.toString(), style: TextStyle()),
         ],
       ),
     );
@@ -169,7 +256,7 @@ class WidgetSelectDay extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: selected == day ? Colors.black87 : Colors.transparent,
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(6),
           ),
           child: Text(title, style: const TextStyle(fontSize: 10)),
         ),
@@ -183,7 +270,7 @@ class WidgetSelectDay extends StatelessWidget {
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: AppColors.dark4,
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(6),
       ),
       child: Row(
         children: [

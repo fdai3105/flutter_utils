@@ -13,6 +13,8 @@ part 'widget_appbar.dart';
 
 part 'widget_bottom_sheet.dart';
 
+part 'widget_field.dart';
+
 part 'widget_image.dart';
 
 part 'widget_list.dart';
