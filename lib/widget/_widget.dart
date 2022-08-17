@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 import '../data/model/_model.dart';
 import '../theme/app_color.dart';
@@ -11,7 +12,11 @@ part 'tab_navigation.dart';
 
 part 'widget_appbar.dart';
 
+part 'widget_arrow_status.dart';
+
 part 'widget_bottom_sheet.dart';
+
+part 'widget_coin_item.dart';
 
 part 'widget_field.dart';
 

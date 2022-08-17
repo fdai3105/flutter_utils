@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/model/_model.dart';
 import '../../../widget/_widget.dart';
-import '../bloc/coin_detail_bloc.dart';
-import '../bloc/coin_detail_event.dart';
-import '../bloc/coin_detail_state.dart';
+import '../coin_detail_bloc.dart';
+import '../coin_detail_event.dart';
+import '../coin_detail_state.dart';
 
 class ExchangeTab extends StatefulWidget {
   final Coin coin;

@@ -14,7 +14,7 @@ class CoinProvider extends ApiService {
         queryParameters: {
           'vs_currency': currency ?? 'usd',
           'per_page': size,
-          'page': page
+          'page': page,
         },
       );
       if (resp.ok) return List.from(resp.data.map((e) => Coin.fromJson(e)));

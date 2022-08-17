@@ -5,12 +5,14 @@ import 'coin_bloc.dart';
 
 class CoinState extends Equatable {
   final List<Coin>? coins;
+  final bool loading;
   final bool loadingMore;
   final int page;
   final Currency currency;
 
   const CoinState({
     this.coins,
+    this.loading = false,
     this.page = 0,
     this.loadingMore = false,
     this.currency = Currency.custom,
@@ -24,12 +26,14 @@ class CoinState extends Equatable {
 
   CoinState copyWith({
     List<Coin>? coins,
+    bool? loading,
     int? page,
     bool? loadingMore,
     Currency? currency,
   }) {
     return CoinState(
       coins: coins ?? this.coins,
+      loading: loading ?? this.loading,
       page: page ?? this.page,
       loadingMore: loadingMore ?? this.loadingMore,
       currency: currency ?? this.currency,
@@ -37,5 +41,5 @@ class CoinState extends Equatable {
   }
 
   @override
-  List<dynamic> get props => [coins, page, loadingMore, currency];
+  List<dynamic> get props => [coins, loading, page, loadingMore, currency];
 }

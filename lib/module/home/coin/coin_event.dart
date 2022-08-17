@@ -7,10 +7,12 @@ abstract class CoinEvent extends Equatable {
 }
 
 class LoadCoinsEvent extends CoinEvent {
-  const LoadCoinsEvent();
+  final bool showLoading;
+
+  const LoadCoinsEvent({this.showLoading = false});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [showLoading];
 }
 
 class ChangeCurrencyEvent extends CoinEvent {

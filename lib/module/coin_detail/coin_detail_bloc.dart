@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 
-import '../../../data/provider/provider.dart';
+import '../../data/provider/provider.dart';
 import 'coin_detail_event.dart';
 import 'coin_detail_state.dart';
 

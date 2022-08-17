@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: TabNavigation(
         index: _currentIndex,
         onTabPress: (index) {
-          if (_currentIndex == index) {
+          if (_currentIndex == index && sc.hasClients) {
             if (sc.offset == 0) return;
             sc.animateTo(
               0,

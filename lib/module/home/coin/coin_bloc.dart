@@ -16,19 +16,21 @@ class CoinBloc extends Bloc<CoinEvent, CoinState> {
     on<ChangeCurrencyEvent>(onCurrencyChange);
     on<LoadCoinsEvent>(onLoadCoins);
 
-    add(const LoadCoinsEvent());
+    add(const LoadCoinsEvent(showLoading: true));
   }
 
   Future onCurrencyChange(
       ChangeCurrencyEvent event, Emitter<CoinState> emit) async {
     try {
-      emit(state.copyWith(currency: event.currency));
+      emit(state.copyWith(currency: event.currency, loading: true));
       emit(state.copyWith(
         page: 1,
         coins: await coinProvider.getCoins(1, currency: state.currencyStr),
       ));
     } catch (e) {
       emit(state.copyWith(currency: state.currency));
+    } finally {
+      emit(state.copyWith(loading: false));
     }
   }
 
@@ -38,6 +40,7 @@ class CoinBloc extends Bloc<CoinEvent, CoinState> {
 
   Future onLoadCoins(LoadCoinsEvent event, Emitter<CoinState> emit) async {
     try {
+      if (event.showLoading) emit(state.copyWith(loading: true));
       emit(state.copyWith(page: state.page + 1, loadingMore: true));
       final resp = await coinProvider.getCoins(
         state.page,
@@ -48,6 +51,7 @@ class CoinBloc extends Bloc<CoinEvent, CoinState> {
       emit(state.copyWith(page: state.page - 1));
     } finally {
       emit(state.copyWith(loadingMore: false));
+      if (event.showLoading) emit(state.copyWith(loading: false));
     }
   }
 }

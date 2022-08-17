@@ -11,3 +11,5 @@ part 'ticker.dart';
 part 'trending.dart';
 
 part 'new.dart';
+
+part 'category.dart';

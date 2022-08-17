@@ -8,9 +8,9 @@ import 'package:timeago/timeago.dart' as timeago;
 import '../../../data/model/_model.dart';
 import '../../../theme/app_color.dart';
 import '../../../utils/string_utils.dart';
-import '../bloc/coin_detail_bloc.dart';
-import '../bloc/coin_detail_event.dart';
-import '../bloc/coin_detail_state.dart';
+import '../coin_detail_bloc.dart';
+import '../coin_detail_event.dart';
+import '../coin_detail_state.dart';
 
 class OverviewTab extends StatelessWidget {
   final Coin coin;

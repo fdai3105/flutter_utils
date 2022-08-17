@@ -2,7 +2,8 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'module/coin_detail/bloc/coin_detail_bloc.dart';
+import 'module/coin_detail/coin_detail_bloc.dart';
+import 'module/home/coin/category/category_bloc.dart';
 import 'module/home/coin/coin_bloc.dart';
 import 'module/home/explore/explore_bloc.dart';
 import 'module/home/home_screen.dart';
@@ -12,6 +13,7 @@ void main() {
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider<CoinBloc>(create: (_) => CoinBloc()),
+      BlocProvider(create: (_) => CategoryBloc()),
       BlocProvider(create: (_) => CoinDetailBloc()),
       BlocProvider(create: (_) => ExploreBloc()),
     ],

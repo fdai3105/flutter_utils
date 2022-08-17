@@ -8,7 +8,7 @@ class CoinDetailState extends Equatable {
   final bool chartLoading;
   Chart? charts;
   final bool marketLoading;
-   Ticker? ticker;
+  Ticker? ticker;
 
   CoinDetailState({
     this.ago = DayAgo.day1h,
